@@ -16,8 +16,7 @@
     "require": {
         "php": ">=7.0"
     },
-
-    "autoload": {       
+    "autoload": { 
         "files":[
             "src/Helpers.php"
         ]

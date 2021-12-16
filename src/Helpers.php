@@ -7,7 +7,7 @@
  */
 function SessionAuth()
 {
-    return session('SessionAuth');
+    return session('SessionAuthSession');
 }
 
 /**
