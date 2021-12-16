@@ -1,6 +1,6 @@
 <?php
 
-namespace SessionAuth;
+namespace App\Http\Controllers\SessionAuth;
 
 use Closure;
 use Illuminate\Http\Request;
