@@ -19,10 +19,10 @@
 
     "autoload": {
         "psr-4": {
-            "SessionAuth\\": "SessionAuth/src/"
+            "SessionAuth\\": "src/"
         },
         "files":[
-            "SessionAuth/src/Helpers.php"
+            "src/Helpers.php"
         ]
     }
 }
