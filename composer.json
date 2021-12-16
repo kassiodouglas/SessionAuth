@@ -16,7 +16,11 @@
     "require": {
         "php": ">=7.0"
     },
-    "autoload": { 
+
+    "autoload": {  
+        "psr-4": {
+            "SessionAuth\\": "src/"
+        },
         "files":[
             "src/Helpers.php"
         ]
