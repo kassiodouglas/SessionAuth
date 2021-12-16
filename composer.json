@@ -18,6 +18,9 @@
     },
 
     "autoload": {  
+        "psr-4": {
+            "SessionAuth\\": "src/"
+        },
         "files":[
             "src/Helpers.php"
         ]
