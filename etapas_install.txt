@@ -2,10 +2,6 @@
 
 composer remove telapps/sessionauth;
 
-#pode dar erro, normal
-composer require tel/sessionauth;
-
-
 
 #kernel.php:
 
@@ -19,6 +15,8 @@ Route::middleware('web')
 ->namespace($this->namespace)
 ->group(base_path('routes/SessionAuth.php'));
 
+
+composer require tel/sessionauth;
 
 cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
 cp -R vendor/tel/SessionAuth/src/routes/SessionAuth.php  routes;
