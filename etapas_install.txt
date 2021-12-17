@@ -1,0 +1,40 @@
+#etapas de instalação
+
+composer remove telapps/sessionauth;
+
+#pode dar erro, normal
+composer require tel/sessionauth;
+
+
+
+#kernel.php:
+
+'SessionAuthMiddleware' => \App\Http\Middleware\SessionAuth\SessionAuthMiddleware::class,
+'SessionAuthMiddlewareUser' => \App\Http\Middleware\SessionAuth\SessionAuthMiddlewareUser::class,
+
+
+#RouteServiceProvider.php
+
+Route::middleware('web')
+->namespace($this->namespace)
+->group(base_path('routes/SessionAuth.php'));
+
+
+cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
+cp -R vendor/tel/SessionAuth/src/routes/SessionAuth.php  routes;
+cp -R vendor/tel/SessionAuth/src/resources/js/SessionAuth  resources/js;
+cp -R vendor/tel/SessionAuth/src/resources/views/SessionAuth  resources/views;
+cp -R vendor/tel/SessionAuth/src/config/SessionAuth.php  config;
+
+
+composer dump;
+
+#packge.json em devDependencies
+    "notiflix": "^3.2.2"
+
+#add em resources/js/app.js
+    require('./SessionAuth/SessionAuth.js');
+
+npm i;
+
+npm run dev;
