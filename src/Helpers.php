@@ -1,5 +1,14 @@
 <?php
 
+function SessionAuthPathSession()
+{
+    $remote = $_SERVER["REMOTE_ADDR"] ?? '127.0.0.1';
+    $id_session = MD5($remote);
+    $filePath = config('SessionAuth.session_path') . "/$id_session.json";
+
+    return $filePath;
+}
+
 /**
  * Retorna um objeto com os dados da sessão
  *
@@ -7,7 +16,18 @@
  */
 function SessionAuth()
 {
-    return session('SessionAuth');
+    $filePath = SessionAuthPathSession();
+
+    $session = json_decode( file_get_contents($filePath));
+    foreach($session->systems as $sys){
+
+        if($sys->id_system == config('SessionAuth.id_system')){
+            $session->profile = $sys->profile;
+            $session->permissions = $sys->permissions;
+        }
+    }
+
+    return $session;
 }
 
 /**
@@ -56,11 +76,14 @@ function SessionAuthHasPermission($cod)
  */
 function SessionAuthHas()
 {
-  if(!session()->has('SessionAuth')){
-      return false;
-  }
+    $filePath = SessionAuthPathSession();
 
-  return true;
+    if(file_exists($filePath)){
+        return true;
+    }
+
+    return false;
+
 }
 
 /**
@@ -70,7 +93,13 @@ function SessionAuthHas()
  */
 function SessionAuthRouteLogin()
 {
-    return config('SessionAuth.APP_DOMINIO').":181";
+    return config('SessionAuth.dominio').":181";
+}
+
+
+function SessionAuthRouteLogout()
+{
+    return config('SessionAuth.dominio').":181/autenticacao/logout";
 }
 
 /**
@@ -109,26 +138,4 @@ function changeLog()
   $html = str_replace('\r\n','',$html);
 
   return $html;
-}
-
-/**
- * Retorna a ultima versao no CHANGELOG.md
- *
- * @return string
- */
-function appVersion()
-{ 
-  $versions = json_decode(changeLog());
-
-  if(property_exists($versions, 'message')){
-    return $versions->message;
-  }
-
-  foreach($versions as $version=>$notes){
-    $v = $version;
-  };
-  $v = str_replace('[','',$v);
-  $v = str_replace(']','',$v);
-
-  return $v;
 }

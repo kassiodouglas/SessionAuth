@@ -16,11 +16,11 @@ class SessionAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!SessionAuthHas()){
+        if(SessionAuthHas()){
             return $next($request);
         }
 
-        return redirect()->route('home');
+        return redirect(SessionAuthRouteLogin());
 
     }
 }

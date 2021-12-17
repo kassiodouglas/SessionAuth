@@ -1,50 +1,33 @@
 
 #.env
 
-SESSION_ID_SYSTEM=XXX
+APP_NAME=xxxxx
+APP_ENV=local
+APP_KEY=xxx
+APP_DEBUG=true
+APP_URL=http://localhost:xx
+SESSION_ID_SYSTEM=xx
 APP_DOMINIO=http://localhost
-MIX_APP_URL="${APP_URL}"
-MIX_APP_DOMINIO="${APP_DOMINIO}"
-MIX_API_LOGIN=api
-MIX_API_PASSWORD=api@tel
-MIX_APP_ENV="${APP_ENV}"
-SESSION_BLADE=app
-SESSION_DRIVER=file
+SESSION_PATH=C:/xampp/htdocs/web/server.49/apps/autenticacao2/storage/sessions
 
 
 #etapas de instalação
 
 composer remove telapps/sessionauth;
+composer remove tel/sessionauth;
 
 
 #kernel.php:
 
 'SessionAuthMiddleware' => \App\Http\Middleware\SessionAuth\SessionAuthMiddleware::class,
-'SessionAuthMiddlewareUser' => \App\Http\Middleware\SessionAuth\SessionAuthMiddlewareUser::class,
-
-
-#RouteServiceProvider.php
-
-Route::middleware('web')
-->namespace($this->namespace)
-->group(base_path('routes/SessionAuth.php'));
 
 
 composer require tel/sessionauth;
 
 cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
 cp -R vendor/tel/SessionAuth/src/routes/SessionAuth.php  routes;
-cp -R vendor/tel/SessionAuth/src/resources/js/SessionAuth  resources/js;
-cp -R vendor/tel/SessionAuth/src/resources/views/SessionAuth  resources/views;
 cp -R vendor/tel/SessionAuth/src/config/SessionAuth.php  config;
 
-
 composer dump;
-
-#packge.json em devDependencies
-    "notiflix": "^3.2.2"
-
-#add em resources/js/app.js
-    require('./SessionAuth/SessionAuth.js');
 
 npm i;npm run dev;
