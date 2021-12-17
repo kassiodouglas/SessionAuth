@@ -7,7 +7,7 @@
  */
 function SessionAuth()
 {
-    return session('SessionAuthSession');
+    return session('SessionAuth');
 }
 
 /**
@@ -109,4 +109,26 @@ function changeLog()
   $html = str_replace('\r\n','',$html);
 
   return $html;
+}
+
+/**
+ * Retorna a ultima versao no CHANGELOG.md
+ *
+ * @return string
+ */
+function appVersion()
+{ 
+  $versions = json_decode(changeLog());
+
+  if(property_exists($versions, 'message')){
+    return $versions->message;
+  }
+
+  foreach($versions as $version=>$notes){
+    $v = $version;
+  };
+  $v = str_replace('[','',$v);
+  $v = str_replace(']','',$v);
+
+  return $v;
 }
