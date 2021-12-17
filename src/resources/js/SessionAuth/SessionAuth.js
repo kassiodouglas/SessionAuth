@@ -141,7 +141,7 @@ global.getSessionData = async () =>{
             body: JSON.stringify(jsonResponse)
         });
 
-        location.href = 'admin/';
+        location.href = `${process.env.MIX_APP_NAME}`;
     }
 
 }
@@ -165,7 +165,7 @@ global.deleteSessionData = async () =>{
 
     if(jsonIdsession.msg){
         console.log(jsonIdsession.msg);
-        location.href = 'admin/';
+        location.href = `${process.env.MIX_APP_NAME}`;
         return;
     }
 

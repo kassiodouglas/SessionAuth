@@ -1,10 +1,20 @@
+
+#.env
+
+SESSION_ID_SYSTEM=XXX
+APP_DOMINIO=http://localhost
+MIX_APP_URL="${APP_URL}"
+MIX_APP_DOMINIO="${APP_DOMINIO}"
+MIX_API_LOGIN=api
+MIX_API_PASSWORD=api@tel
+MIX_APP_ENV="${APP_ENV}"
+SESSION_BLADE=app
+SESSION_DRIVER=file
+
+
 #etapas de instalação
 
 composer remove telapps/sessionauth;
-
-#pode dar erro, normal
-composer require tel/sessionauth;
-
 
 
 #kernel.php:
@@ -19,6 +29,8 @@ Route::middleware('web')
 ->namespace($this->namespace)
 ->group(base_path('routes/SessionAuth.php'));
 
+
+composer require tel/sessionauth;
 
 cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
 cp -R vendor/tel/SessionAuth/src/routes/SessionAuth.php  routes;
@@ -35,6 +47,4 @@ composer dump;
 #add em resources/js/app.js
     require('./SessionAuth/SessionAuth.js');
 
-npm i;
-
-npm run dev;
+npm i;npm run dev;
