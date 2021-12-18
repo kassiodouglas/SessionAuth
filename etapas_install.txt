@@ -25,11 +25,11 @@
     cp -R vendor/tel/SessionAuth/src/app/Http/Controllers/SessionAuth  app/Http/Controllers;
 
 
-#add a rota fora do Middleware
+#add a rota fora do Middleware e sem prefixo
     Route::get('/',[SessionAuthController::class,'home']);
 
 
-#add as rotas no Middleware
+#add as rotas dentro do Middleware e sem prefixo
     Route::get('/session',[SessionAuthController::class,'session'])->name('session');
     Route::get('/logout',[SessionAuthController::class,'logout'])->name('logout');
     Route::get('/login',[SessionAuthController::class,'login'])->name('login');

@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class SessionAuthController extends Controller
 {
     /**
+     * Redireciona para a página de inicial com name de home
+     *
+     * @return void
+     */
+    public function home()
+    {
+        return redirect()->route('home');
+    }
+
+    /**
      * Redireciona para a página de logout
      *
      * @return void
