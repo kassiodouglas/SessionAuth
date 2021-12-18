@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Retorna o caminho dos arquivos da sessao
+ *
+ * @return string
+ */
 function SessionAuthPathSession()
 {
     $remote = $_SERVER["REMOTE_ADDR"] ?? '127.0.0.1';
@@ -19,13 +24,24 @@ function SessionAuth()
     $filePath = SessionAuthPathSession();
 
     $session = json_decode( file_get_contents($filePath));
+    $x=0;
     foreach($session->systems as $sys){
 
         if($sys->id_system == config('SessionAuth.id_system')){
+            $x++;
+
+            $session->name_system = $sys->name_system;
+            $session->id_system = $sys->id_system;
+            $session->port = $sys->port;
             $session->profile = $sys->profile;
             $session->permissions = $sys->permissions;
+
         }
     }
+
+    unset($session->systems);
+
+    if($x==0)  $session->block = true;
 
     return $session;
 }
@@ -38,7 +54,7 @@ function SessionAuth()
  */
 function SessionAuthHasPermission($cod)
 {
-    if( empty(SessionAuthHas()) )
+    if( !SessionAuthHas() )
       return false;
 
 
@@ -78,9 +94,10 @@ function SessionAuthHas()
 {
     $filePath = SessionAuthPathSession();
 
-    if(file_exists($filePath)){
+    if(file_exists($filePath))
+      if( !array_key_exists('block', (array)SessionAuth()) )
         return true;
-    }
+
 
     return false;
 
@@ -96,7 +113,11 @@ function SessionAuthRouteLogin()
     return config('SessionAuth.dominio').":181";
 }
 
-
+/**
+ * Retorna a rota para a página de logout
+ *
+ * @return string
+ */
 function SessionAuthRouteLogout()
 {
     return config('SessionAuth.dominio').":181/autenticacao/logout";
@@ -105,7 +126,7 @@ function SessionAuthRouteLogout()
 /**
  * Cria um html com o conteudo do arquivo CHANGELOG.md
  *
- * @return void
+ * @return string
  */
 function changeLog()
 {
@@ -138,4 +159,70 @@ function changeLog()
   $html = str_replace('\r\n','',$html);
 
   return $html;
+}
+
+/**
+ * Escreve no arquivo json da sessão
+ *
+ * @param string $session_data
+ * @return bool
+ */
+function SessionAuth_write(string $session_data)
+{
+    $file = SessionAuthPathSession();
+
+    $fileCreated = fopen($file ,'w');
+    if($fileCreated == false)
+        return false;
+
+    if(fwrite($fileCreated, $session_data) ){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * Adicione uma nova chave na sessão
+ *
+ * @param string $key
+ * @param mixed $value
+ * @return mixed
+ */
+function SessionAuthAdd( string $key, mixed $value )
+{
+    try{
+
+        $session_data = SessionAuth();
+        $session_data->$key = $value;
+
+        SessionAuth_write( json_encode($session_data) );
+
+        return true;
+
+    }catch(\ErrorException $e){
+        return $e->getMessage();
+    }
+}
+
+/**
+ * Deleta uma chave na sessão
+ *
+ * @param string $key
+ * @return mixed
+ */
+function SessionAuthDelete(string $key)
+{
+    try{
+
+        $session_data = SessionAuth();
+        unset($session_data->$key);
+
+        SessionAuth_write( json_encode($session_data) );
+
+        return true;
+
+    }catch(\ErrorException $e){
+        return $e->getMessage();
+    }
 }
