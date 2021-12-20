@@ -4,7 +4,7 @@ const timeToCheck_env = (process.env.MIX_TIME_TO_CHECK) ? process.env.MIX_TIME_T
 
 global.timeToexpires = 1000 * timeToexpires_env;
 global.timeToCheck = 1000 * timeToCheck_env;
-global.id_session = `SessionAuth_${process.env.SESSION_ID_SYSTEM}`;
+global.id_session = `SessionAuth_${process.env.MIX_SESSION_ID_SYSTEM}`;
 
 
 /**
@@ -12,8 +12,7 @@ global.id_session = `SessionAuth_${process.env.SESSION_ID_SYSTEM}`;
  */
 global.setSession = async () =>{
 
-    const url = `${process.env.MIX_APP_DOMINIO}:81/session`;
-    const id_session = `SessionAuth_${process.env.SESSION_ID_SYSTEM}`;
+    const url = `${process.env.MIX_APP_URL}/session`;
 
     const response = await fetch(url);
     const responseJson = await response.json();
@@ -64,7 +63,7 @@ global.inactivity = async()  =>{
 
     var timelogout = setTimeout(()=>{
         localStorage.removeItem(id_session);
-        location.href = 'autenticacao/logout';
+        location.href = `${process.env.MIX_APP_DOMINIO}:81/autenticacao/logout`;
     }, timeToexpires);
 
     var counter = timeToexpires/1000;

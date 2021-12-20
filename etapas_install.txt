@@ -9,18 +9,27 @@
     APP_DOMINIO=http://localhost
     SESSION_PATH=C:/xampp/htdocs/web/server.49/apps/autenticacao2/storage/sessions
 
-    MIX_TIME_TO_EXPIRES=180
-    MIX_TIME_TO_CHECK=300
+    MIX_APP_DOMINIO="${APP_DOMINIO}"
+    MIX_APP_URL="${APP_URL}"
+    MIX_SESSION_ID_SYSTEM="${SESSION_ID_SYSTEM}"
+
+    MIX_TIME_TO_EXPIRES=180 (opcional, em segundos)
+    MIX_TIME_TO_CHECK=300 (opcional, em segundos)
+
 
 #config session.php
 	'files' => storage_path('framework/sessions'),
 
 #etapas de instalação
 
+#package.json em devDependencies
+    "notiflix": "^3.2.2"
+
 #kernel.php:    
     'SessionAuthMiddleware' => \App\Http\Middleware\SessionAuth\SessionAuthMiddleware::class,
 
 #resources/js.app.js
+    global.Notiflix = require('notiflix');
     require('./SessionAuth/SessionAuth.js');
 
 #rode os comandos
@@ -29,7 +38,7 @@
     cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
     cp -R vendor/tel/SessionAuth/src/config/SessionAuth.php  config;
     cp -R vendor/tel/SessionAuth/src/app/Http/Controllers/SessionAuth  app/Http/Controllers;
-    cp -R vendor/tel/SessionAuth/src/app/resources/js/SessionAuth  app/resources/js;
+    cp -R vendor/tel/SessionAuth/src/resources/js/SessionAuth  resources/js;
     cls;
 	
 
@@ -41,3 +50,6 @@
     Route::get('/session',[SessionAuthController::class,'session'])->name('session');
     Route::get('/logout',[SessionAuthController::class,'logout'])->name('logout');
     Route::get('/login',[SessionAuthController::class,'login'])->name('login');
+
+
+    npm run dev;
