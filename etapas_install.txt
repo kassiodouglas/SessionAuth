@@ -9,21 +9,29 @@
     APP_DOMINIO=http://localhost
     SESSION_PATH=C:/xampp/htdocs/web/server.49/apps/autenticacao2/storage/sessions
 
+    MIX_TIME_TO_EXPIRES=180
+    MIX_TIME_TO_CHECK=300
 
+#config session.php
+	'files' => storage_path('framework/sessions'),
 
 #etapas de instalação
 
 #kernel.php:    
     'SessionAuthMiddleware' => \App\Http\Middleware\SessionAuth\SessionAuthMiddleware::class,
 
+#resources/js.app.js
+    require('./SessionAuth/SessionAuth.js');
 
 #rode os comandos
+    composer remove telapps/sessionauth;
     composer require tel/sessionauth;
-
     cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
     cp -R vendor/tel/SessionAuth/src/config/SessionAuth.php  config;
     cp -R vendor/tel/SessionAuth/src/app/Http/Controllers/SessionAuth  app/Http/Controllers;
-
+    cp -R vendor/tel/SessionAuth/src/app/resources/js/SessionAuth  app/resources/js;
+    cls;
+	
 
 #add a rota fora do Middleware e sem prefixo
     Route::get('/',[SessionAuthController::class,'home']);
