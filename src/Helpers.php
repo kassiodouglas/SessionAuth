@@ -110,7 +110,7 @@ function SessionAuthHas()
  */
 function SessionAuthRouteLogin()
 {
-    return config('SessionAuth.dominio').":181";
+    return config('SessionAuth.dominio').":81";
 }
 
 /**
@@ -120,7 +120,7 @@ function SessionAuthRouteLogin()
  */
 function SessionAuthRouteLogout()
 {
-    return config('SessionAuth.dominio').":181/autenticacao/logout";
+    return config('SessionAuth.dominio').":81/autenticacao/logout";
 }
 
 /**
