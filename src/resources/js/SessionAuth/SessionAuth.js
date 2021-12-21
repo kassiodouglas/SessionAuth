@@ -1,6 +1,6 @@
 //Config
-const timeToexpires_env = (process.env.MIX_TIME_TO_EXPIRES) ? process.env.MIX_TIME_TO_EXPIRES : 180;
-const timeToCheck_env = (process.env.MIX_TIME_TO_CHECK) ? process.env.MIX_TIME_TO_CHECK : 300 ;
+const timeToexpires_env = (process.env.MIX_TIME_TO_EXPIRES) ? process.env.MIX_TIME_TO_EXPIRES : 180;//3minutos
+const timeToCheck_env = (process.env.MIX_TIME_TO_CHECK) ? process.env.MIX_TIME_TO_CHECK : 5400 ;//90minutos
 
 global.timeToexpires = 1000 * timeToexpires_env;
 global.timeToCheck = 1000 * timeToCheck_env;
@@ -47,7 +47,7 @@ global.hasActivity = async(e)=> {
 }
 
 /**
- * Ativado quando a inativiade
+ * Ativado quando a inativiade pelo tempo estipulado na variavel timeToCheck_env
  * @returns
  */
 global.inactivity = async()  =>{
