@@ -43,11 +43,8 @@ class SessionAuthController extends Controller
      * @return void
      */
     public function session()
-    {
-        if(config('app.env') == 'local')
-            return SessionAuth();
-
-        return false;
+    {        
+        return SessionAuth();       
     }
 
 

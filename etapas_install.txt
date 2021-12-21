@@ -35,11 +35,19 @@
 #rode os comandos
     composer remove telapps/sessionauth;
     composer require tel/sessionauth;
+
+    rm -R app/Http/Middleware/SessionAuth;
+    rm -R config/SessionAuth.php;
+    rm -R app/Http/Controllers/SessionAuth;
+    rm -R resources/js/SessionAuth;
+
     cp -R vendor/tel/SessionAuth/src/app/Http/Middleware/SessionAuth  app/Http/Middleware;
     cp -R vendor/tel/SessionAuth/src/config/SessionAuth.php  config;
     cp -R vendor/tel/SessionAuth/src/app/Http/Controllers/SessionAuth  app/Http/Controllers;
     cp -R vendor/tel/SessionAuth/src/resources/js/SessionAuth  resources/js;
-    cls;
+       
+    npm i;
+    npm run dev;
 	
 
 #add a rota fora do Middleware e sem prefixo
@@ -52,4 +60,3 @@
     Route::get('/login',[SessionAuthController::class,'login'])->name('login');
 
 
-    npm run dev;
