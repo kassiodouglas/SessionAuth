@@ -7,11 +7,17 @@
  */
 function SessionAuthPathSession()
 {
-  @session_start();
-  $id_session = $_SESSION['SessionAuth_id'];
-  $filePath = config('SessionAuth.session_path') . "/$id_session.json";
+    @session_start();
 
-  return $filePath;
+    if( !array_key_exists('SessionAuth_id',$_SESSION) )
+        return false;
+
+    $id_session = $_SESSION['SessionAuth_id'];
+
+
+    $filePath = config('SessionAuth.session_path') . "/$id_session.json";
+
+    return $filePath;
 }
 
 /**
