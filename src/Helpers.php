@@ -7,8 +7,14 @@
  */
 function SessionAuthPathSession()
 {
-    $remote = $_SERVER["REMOTE_ADDR"] ?? '127.0.0.1';
-    $id_session = MD5($remote);
+    @session_start();
+
+    if( !array_key_exists('SessionAuth_id',$_SESSION) )
+        return false;
+
+    $id_session = $_SESSION['SessionAuth_id'];
+
+
     $filePath = config('SessionAuth.session_path') . "/$id_session.json";
 
     return $filePath;
